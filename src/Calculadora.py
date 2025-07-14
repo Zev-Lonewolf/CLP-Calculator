@@ -1,36 +1,43 @@
+valores = []
+operacoes = []
+
 while True:
     try:
-        valor1 = float(input('Valor: '))
-        break
+        valor = float(input('Valor: '))
+        valores.append(valor)
     except ValueError:
         print('Valor Inválido! Insira um número válido.')
-              
-while True:
+        continue
+
     operação = input('Operação ou OK para sair: ').strip().lower()
+
     if operação == 'ok':
         break
-        
-    try:
-        valor2 = float(input('Valor: '))
-    except ValueError:
-        print('Valor Inválido! Insira um número válido.')
-        continue
-
-    if operação == '+':
-        resultado = valor1 + valor2
-    elif operação == '-':
-        resultado = valor1 - valor2
-    elif operação == '*':
-        resultado = valor1 * valor2
-    elif operação == '/':
-        if valor2 != 0:
-            resultado = valor1 / valor2
-        else:
-            print('Não é possivel dividir por zero!')
-            continue
+    elif operação in ['+', '-', '*', '/']:
+        operacoes.append(operação)
     else:
         print('Operação inválida!')
+        valores.pop()
         continue
+resultado = valores[0]
 
-    print(f'{resultado}')
-    valor1 = resultado
+for i in range(len(operacoes)):
+    op = operacoes[i]
+    prox_valor = valores[i + 1]
+
+    if op == '+':
+        resultado += prox_valor
+    elif op == '-':
+        resultado -= prox_valor
+    elif op == '*':
+        resultado *= prox_valor
+    elif op == '/':
+        if prox_valor != 0:
+            resultado /= prox_valor
+        else:
+            print('Erro! Divisão por zero!')
+            resultado = None
+            break
+
+if resultado is not None:
+    print({resultado})
